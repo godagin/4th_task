@@ -1,0 +1,49 @@
+Failai:
+Visi failų pavadinimai prasideda mažąja raide, rašomi anglų kalba.
+
+Kintamieji:
+Visi kintamųjų pavadinimai rašomi anglų kalba. Kintamojo pavadinimas prasideda iš mažosios raidės. Jei kintamojo pavadinime yra daugiau nei vienas žodis, kiti žodžiai užrašomi
+pradedant didžiąja raide (pvz.: multipleWordsVariable). Laikinieji kintami gali būti trumpi, neapibrėžtos reikšmės.
+
+Funkcijos:
+Funkcijų pavadinimai rašomi anglų kalba, pavadinime yra veiksmažodis, kuris apibendrina funkcijos esmę. Prasideda mažąja raide. Jei funkcijos pavadinime yra daugiau nei vienas
+žodis, jis rašomas iš didžiosios raidės.
+
+Konstantos:
+Visos konstantos rašomos iš didžiųjų raidžių, jeigu yra keleta žodžių, jie atskiriami apatiniais brūkšniais (pvz.: FUNCTIONS_H_INCLUDED). Pavadinimai anglų kalba.
+
+Tarpai:
+Visi operatoriai atskiriami tarpais iš abiejų pusių išskyrus "." operatorių.
+
+Ciklai:
+    While ciklas turėtų palaikyti šią formą:
+
+    while(salyga){
+        kodas;
+    }
+
+    išskyrus atvėjį, kai ciklo viduje nėra kodo, tada galima naudoti šią formą:
+
+    while(salyga);
+
+    Do-While ciklas turėtų palaikyti šią formą:
+
+    do{
+        kodas;
+    } while (salyga);
+
+Sąlygos sakiniai:
+
+    If-else sąlygos sakiniai turėtų palaikyti šią formą:
+
+    if(salyga){
+        kodas;
+    }else if(salyga){
+        kodas;
+    }else{
+        kodas;
+    }
+
+Sąlygos sakiniuose visada naudoti laužtinius skliaustus. Nenaudoti tokio formato:
+    if(salyga)
+        kodas;
