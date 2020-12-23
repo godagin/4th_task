@@ -2,30 +2,31 @@
 #include <stdlib.h>
 #include <assert.h>
 
-struct Node{
+typedef struct Node{
     int value;
     struct Node *next;
-};
+}NODE;
 
-struct Node* createNewNode(){
-    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
-
-    assert(newNode != NULL);
+NODE* createNewNode(){
+    NODE *newNode = (NODE*)malloc(sizeof(NODE));
 
     return newNode;
 }
 
-void readListFromFile(struct Node *headNode, FILE *readFile){
+void readListFromFile(NODE *headNode, FILE *readFile, int *listIsCreated){
     assert(readFile != NULL);
     assert(headNode != NULL);
 
 
-    fscanf(readFile, "%d", &(headNode->value));
+    if(fscanf(readFile, "%d", &(headNode->value)) != 1){
+        printf("Faile pateikti netinkami duomenys arba failas tuscias.\n");
+        return;
+    }
 
-    struct Node *endNode = headNode;
+    NODE *endNode = headNode;
 
     while(!feof(readFile)){
-        struct Node* currentNode = createNewNode();
+        NODE* currentNode = createNewNode();
 
         currentNode->next = NULL;
         fscanf(readFile, "%d", &(currentNode->value));
@@ -33,26 +34,20 @@ void readListFromFile(struct Node *headNode, FILE *readFile){
 
         endNode = currentNode;
     }
+    *listIsCreated = 1;
+
+    printf("Sarasas sukurtas.\n");
 }
 
-void insertNode(struct Node **currentNode, int valueAfter, int number){
+void insertNode(NODE **currentNode, int valueAfter, int number, int oneElementList){
     assert((*currentNode) != NULL);
 
 
-    if((*currentNode)->next == NULL){
+    if(((*currentNode)->next == NULL) && (oneElementList == 0)){
         printf("Toks sekos narys neegzistuoja.\n");
         return;
-    }else if((*currentNode)->next->value == valueAfter){
-        struct Node *insertedNode = createNewNode();
-
-        insertedNode->next = (*currentNode)->next;
-        insertedNode->value = number;
-        (*currentNode)->next = insertedNode;
-
-        printf("Reiksme iterpta.\n");
-        return;
     }else if((*currentNode)->value == valueAfter){
-        struct Node *newNode = createNewNode();
+        NODE *newNode = createNewNode();
 
         newNode->value = number;
         newNode->next = (*currentNode);
@@ -60,14 +55,23 @@ void insertNode(struct Node **currentNode, int valueAfter, int number){
 
         printf("Reiksme iterpta.\n");
         return;
+    }else if((*currentNode)->next->value == valueAfter){
+        NODE *insertedNode = createNewNode();
+
+        insertedNode->next = (*currentNode)->next;
+        insertedNode->value = number;
+        (*currentNode)->next = insertedNode;
+
+        printf("Reiksme iterpta.\n");
+        return;
     }else{
-        insertNode(&((*currentNode)->next), valueAfter, number);
+        insertNode(&((*currentNode)->next), valueAfter, number, oneElementList);
         return;
     }
     printf("RRR\n");
 }
 
-void printList(struct Node *currentNode, int listIsCreated){
+void printList(NODE *currentNode, int listIsCreated){
     assert(currentNode != NULL);
     assert(listIsCreated <= 1);
     assert(listIsCreated >= 0);
@@ -86,7 +90,7 @@ void printList(struct Node *currentNode, int listIsCreated){
     }
 }
 
-void freeAll(struct Node **currentNode){
+void freeAll(NODE **currentNode){
     assert((*currentNode) != NULL);
 
 
@@ -95,7 +99,7 @@ void freeAll(struct Node **currentNode){
         return;
     }
 
-    struct Node *nextNode = (*currentNode)->next;
+    NODE *nextNode = (*currentNode)->next;
 
     freeAll(&nextNode);
 

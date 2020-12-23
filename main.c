@@ -6,8 +6,10 @@ int main(){
     int number;
     int command;
     int listIsCreated = 0;
-    struct Node *headNode = createNewNode();
+    int oneElementList = 0;
+    NODE *headNode = createNewNode();
     (*headNode).next = NULL;
+    (*headNode).value = 0;
 
     printf("Meniu:\n");
     printf("Iveskite 0, jei norite sukurti sarasa is faile esanciu duomenu.\n");
@@ -23,17 +25,16 @@ int main(){
             readFile = fopen("data.txt", "r");
 
             if(readFile != NULL){
-                readListFromFile(headNode, readFile);
+                readListFromFile(headNode, readFile, &listIsCreated);
             }else{
                 printf("Negalima atidaryti failo.\n");
                 return 0;
             }
-            listIsCreated = 1;
-            printf("Sarasas sukurtas.\n");
+            fclose(readFile);
         }else if(command == 1){
             printList(headNode, listIsCreated);
         }else if(command == 2){
-            if(listIsCreated != 0){
+            if(listIsCreated == 1){
                 int valueAfterNew;
                 int newValue;
 
@@ -47,8 +48,11 @@ int main(){
                     printf("Netinkamo formato ivestis. Prasome ivesti sveika skaiciu:\n");
                     while(getchar() != '\n');
                 }
+                if(headNode->next == NULL){
+                    oneElementList = 1;
+                }
 
-                insertNode(&headNode, valueAfterNew, newValue);
+                insertNode(&headNode, valueAfterNew, newValue, oneElementList);
             }else{
                 printf("Sarasas dar nebuvo sukurtas.\n");
             }

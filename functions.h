@@ -1,16 +1,16 @@
 #ifndef FUNCTIONS_H_INCLUDED
 #define FUNCTIONS_H_INCLUDED
 
-struct Node{
+typedef struct Node{
     int value;
     struct Node *next;
-};
+}NODE;
 
-struct Node* createNewNode();
-void readListFromFile(struct Node *headNode, FILE *readFile);
-void insertNode(struct Node **currentNode, int valueAfter, int number);
-void printList(struct Node *currentNode, int listIsCreated);
-void freeAll(struct Node **currentNode);
+NODE* createNewNode();
+void readListFromFile(NODE *headNode, FILE *readFile, int *listIsCreated);
+void insertNode(NODE **currentNode, int valueAfter, int number, int oneElementList);
+void printList(NODE *currentNode, int listIsCreated);
+void freeAll(NODE **currentNode);
 
 
 #endif
